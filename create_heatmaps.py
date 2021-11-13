@@ -33,7 +33,7 @@ args = parser.parse_args()
 def infer_single_slide(model, features, label, reverse_label_dict, k=1):
 	features = features.to(device)
 	with torch.no_grad():
-		if isinstance(model, (CLAM_SB,)):
+		if isinstance(model, (CLAM_SB, CLAM_MB)):
 			model_results_dict = model(features)
 			logits, Y_prob, Y_hat, A, _ = model(features)
 			Y_hat = Y_hat.item()
@@ -137,7 +137,7 @@ if __name__ == '__main__':
 
 
 	if data_args.process_list is None:
-		if isintance(data_args.data_dir, list):
+		if isinstance(data_args.data_dir, list):
 			slides = []
 			for data_dir in data_args.data_dir:
 				slides.extend(os.listdir(data_dir))
